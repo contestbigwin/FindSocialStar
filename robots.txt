@@ -1,2 +1,2 @@
 User-agent: *
-Allow: /
+Sitemap: https://findsocialstar.com/sitemap.xml
