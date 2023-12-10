@@ -3,8 +3,14 @@
     RewriteBase /
 
     # Force www and HTTPS
-    RewriteCond %{HTTP_HOST} ^findsocialstar\.com [NC]
-    RewriteRule ^(.*)$ https://www.findsocialstar.com/$1 [L,R=301]
+    RewriteCond %{HTTP_HOST} !^www\.
+    RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
+
+    RewriteCond %{HTTPS} off
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Remove "index.html" from URLs
+    RewriteRule ^index\.html$ / [R=301,L]
 
     # Remove file extension from URLs
     RewriteCond %{REQUEST_FILENAME} !-f
@@ -16,3 +22,4 @@
     RewriteCond %{REQUEST_URI} !(.*)/$
     RewriteRule ^(.*)$ $1/ [L,R=301]
 </IfModule>
+
