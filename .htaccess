@@ -1,0 +1,18 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Force www and HTTPS
+    RewriteCond %{HTTP_HOST} ^findsocialstar\.com [NC]
+    RewriteRule ^(.*)$ https://www.findsocialstar.com/$1 [L,R=301]
+
+    # Remove file extension from URLs
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^([^/]+)/?$ $1.html [L]
+
+    # Force trailing slash
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !(.*)/$
+    RewriteRule ^(.*)$ $1/ [L,R=301]
+</IfModule>
