@@ -3,7 +3,7 @@
     RewriteEngine On
 
     # Force www in the URL and HTTPS
-    RewriteCond %{HTTP_HOST} ^findsocialstar\.com [NC,OR]
+    RewriteCond %{HTTP_HOST} !^www\. [NC,OR]
     RewriteCond %{HTTPS} off
     RewriteRule ^ https://www.findsocialstar.com%{REQUEST_URI} [L,R=301]
 
