@@ -1,25 +1,32 @@
+
 <IfModule mod_rewrite.c>
+    Options +FollowSymlinks
     RewriteEngine On
-    RewriteBase /
 
-    # Force www and HTTPS
-    RewriteCond %{HTTP_HOST} !^www\.
-    RewriteRule ^(.*)$ https://www.%{HTTP_HOST}/$1 [L,R=301]
+    # Force www in the URL
+    RewriteCond %{HTTP_HOST} ^findsocialstar\.com [NC]
+    RewriteRule ^(.*)$ http://www.findsocialstar.com/$1 [L,R=301]
 
+    # Force HTTPS (if you have an SSL certificate)
     RewriteCond %{HTTPS} off
     RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-    # Remove "index.html" from URLs
-    RewriteRule ^index\.html$ / [R=301,L]
-
-    # Remove file extension from URLs
-    RewriteCond %{REQUEST_FILENAME} !-f
+    # Remove file extensions (e.g., .php) from URLs
     RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteRule ^([^/]+)/?$ $1.html [L]
+    RewriteCond %{REQUEST_FILENAME}\.php -f
+    RewriteRule ^([^/]+)/$ $1.php
 
-    # Force trailing slash
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteCond %{REQUEST_URI} !(.*)/$
-    RewriteRule ^(.*)$ $1/ [L,R=301]
+    # Remove trailing slashes
+    RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+    # Redirect to a custom 404 error page
+    ErrorDocument 404 /404-error-page.html
+
+    # Set default charset to UTF-8
+    AddDefaultCharset UTF-8
+
+    # Enable Gzip compression
+    <IfModule mod_deflate.c>
+        AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript application/json
+    </IfModule>
 </IfModule>
-
