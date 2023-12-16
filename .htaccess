@@ -2,13 +2,10 @@
     Options +FollowSymlinks
     RewriteEngine On
 
-    # Force www in the URL
-    RewriteCond %{HTTP_HOST} ^findsocialstar\.com [NC]
-    RewriteRule ^(.*)$ http://www.findsocialstar.com/$1 [L,R=301]
-
-    # Force HTTPS (if you have an SSL certificate)
+    # Force www in the URL and HTTPS
+    RewriteCond %{HTTP_HOST} ^findsocialstar\.com [NC,OR]
     RewriteCond %{HTTPS} off
-    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+    RewriteRule ^ https://www.findsocialstar.com%{REQUEST_URI} [L,R=301]
 
     # Remove file extensions (e.g., .html)
     RewriteCond %{REQUEST_FILENAME} !-d
